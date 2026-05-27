@@ -4,14 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            align-items:center;
+        }
+        form{
+            text-align:center;
+            margin:20px;
+            padding:20px;
+            background-color:rgba(238, 212, 243, 0.902);
+            width:350px;
+            height:400px;
+            border-radius:10px;
+            margin-left:600px;
+            margin-top:100px;
+        }
+        input[type="text"],input[type="email"],input[type="number"],input[type="password"]{
+            border-radius:5px;
+            border:none;
+            padding:10px;
+            margin:10px;
+        }
+        h3{
+            text-align:center;
+        }
+        label{
+            font-size:20px;
+            font-weight:700px;
+        }
+        button{
+            background-color:rgba(193, 114, 193, 0.858);
+            border:none;
+            border-radius:5px;
+            height:40px;
+            width:100px;
+
+        }
+         input[type="submit"]{
+             /* padding:1px; */
+            /* margin:10px; */
+            width:300px;
+            border-radius:5px;
+            border:none;
+            height:40px;
+        }
+    </style>
 </head>
 <body>
-    <H3>Registartion form</H3>
+    
     <form>
+        <H3>Registartion form</H3>
         <label for=name>Name</label>
         <input type="text" id=""name>
         <br>
-        <lable for=rollno>Roll NUmber</lable>
+        <label for=rollno>Roll Number</lable>
         <input type="number" id="rollno">
         <br>
         <label for="email">Email</label>
@@ -21,7 +67,10 @@
         <input type="password" id="pass">
         <br>
         <button type="submit">Register</button>
-    </form>
+    </form><br>
+
+    _______________
+
     <br>
     <br>
     <button onclick=windows.location.href="login.html">Back to login</button>

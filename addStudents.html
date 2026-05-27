@@ -4,9 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+           body{
+            align-items:center;
+        }
+        form{
+            text-align:center;
+            margin:20px;
+            padding:20px;
+            background-color:rgba(238, 212, 243, 0.902);
+            width:350px;
+            height:400px;
+            border-radius:10px;
+            margin-left:600px;
+            margin-top:100px;
+        }
+        input[type="text"],input[type="email"],input[type="number"],input[type="password"]{
+            border-radius:5px;
+            border:none;
+            padding:10px;
+            margin:10px;
+        }
+        h3{
+            text-align:center;
+        }
+        label{
+            font-size:20px;
+            font-weight:700px;
+        }
+        button{
+            background-color:rgba(193, 114, 193, 0.858);
+            border:none;
+            border-radius:5px;
+            height:40px;
+            width:100px;
+
+        }
+         input[type="submit"]{
+             /* padding:1px; */
+            /* margin:10px; */
+            width:300px;
+            border-radius:5px;
+            border:none;
+            height:40px;
+        }
+         nav{
+            background-color:black;
+            height:50px;
+             text-align:center;
+        }
+        
+        a{
+            text-decoration:none;
+            font-size:30px;
+            color:white;
+            margin:20px;
+            padding-top:20px;
+            
+        }
+        nav a:hover{
+            color:plum;
+        }
+    </style>
 </head>
 <body>
+    <nav>
+        <a href="addStudents.html">Add Students</a>
+        <a href=editStudents.html>Edit Students</a>
+        <a href="deleteStudents.html">Delete Students</a>
+        <a href="viewStudents.html">View Students</a>
+    </nav>
     <form>
+        <h3> Add Students</h3>
         <label for ="name">Name</label>
         <input type ="text" id="name">
         <br>
@@ -18,7 +87,7 @@
         <br>
         <label for="cgpa">CGPA</label>
         <input type="text" id="cgpa">
-        <br>
+        <br><br><br><br>
         <button type="submit">Add Student</button>
 
     </form>
