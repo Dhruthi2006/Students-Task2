@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom right, rgb(179, 151, 224), rgb(238, 154, 238));
+        }
+
         form {
             margin: 100px auto;
             padding: 30px;
-            background-color: rgba(238, 212, 243, 0.902);
+            background-color: white;
             width: 500px;
+            height: auto;
             border-radius: 10px;
             text-align: left;
             box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2)
@@ -28,7 +35,7 @@
             width: 100%;
             height: 40px;
             padding: 10px;
-            border: none;
+            /* border: none; */
             border-radius: 5px;
             box-sizing: border-box;
             margin-bottom: 20px;
@@ -36,7 +43,7 @@
 
         input[type="submit"] {
             padding: 10px 20px;
-            border: none;
+            /* border: none; */
             border-radius: 5px;
             cursor: pointer;
         }
@@ -80,7 +87,7 @@
     <nav>
         <a href="addStudents.html">Add Students</a>
         <a href=editStudents.html>Edit Students</a>
-        <a href="deleteStudents.html">Delete Students</a>
+        <!-- <a href="deleteStudents.html">Delete Students</a> -->
         <a href="viewStudents.html">View Students</a>
         <a href="Index.html">Log Out</a>
     </nav>
@@ -102,35 +109,35 @@
         <button type="submit">Update Student</button>
     </form>
     <script>
-    let students = JSON.parse(localStorage.getItem("students")) || [];
+        let students = JSON.parse(localStorage.getItem("students")) || [];
 
-    let index = localStorage.getItem("editIndex");
+        let index = localStorage.getItem("editIndex");
 
-    document.getElementById("name").value = students[index].name;
-    document.getElementById("rollno").value = students[index].rollno;
-    document.getElementById("branch").value = students[index].branch;
-    document.getElementById("cgpa").value = students[index].cgpa;
-    
-</script>
-<script>
-function updateStudent() {
+        document.getElementById("name").value = students[index].name;
+        document.getElementById("rollno").value = students[index].rollno;
+        document.getElementById("branch").value = students[index].branch;
+        document.getElementById("cgpa").value = students[index].cgpa;
 
-    let students = JSON.parse(localStorage.getItem("students")) || [];
+    </script>
+    <script>
+        function updateStudent() {
 
-    let index = localStorage.getItem("editIndex");
+            let students = JSON.parse(localStorage.getItem("students")) || [];
 
-    students[index].name = document.getElementById("name").value;
-    students[index].rollno = document.getElementById("rollno").value;
-    students[index].branch = document.getElementById("branch").value;
-    students[index].cgpa = document.getElementById("cgpa").value;
+            let index = localStorage.getItem("editIndex");
 
-    localStorage.setItem("students", JSON.stringify(students));
+            students[index].name = document.getElementById("name").value;
+            students[index].rollno = document.getElementById("rollno").value;
+            students[index].branch = document.getElementById("branch").value;
+            students[index].cgpa = document.getElementById("cgpa").value;
 
-    alert("Student Updated Successfully");
+            localStorage.setItem("students", JSON.stringify(students));
 
-    window.location.href = "viewStudents.html";
-}
-</script>
+            alert("Student Updated Successfully");
+
+            window.location.href = "viewStudents.html";
+        }
+    </script>
 </body>
 
 </html>

@@ -6,11 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom right, rgb(179, 151, 224), rgb(238, 154, 238));
+        }
+
         form {
             margin: 100px auto;
             padding: 30px;
-            background-color: rgba(238, 212, 243, 0.902);
+            background-color: white;
             width: 500px;
+            height: auto;
             border-radius: 10px;
             text-align: left;
             box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2)
@@ -30,7 +39,7 @@
             width: 100%;
             height: 40px;
             padding: 10px;
-            border: none;
+            /* border: none; */
             border-radius: 5px;
             box-sizing: border-box;
             margin-bottom: 20px;
@@ -38,19 +47,22 @@
 
         input[type="submit"] {
             padding: 10px 20px;
-            border: none;
+            /* border: none; */
             border-radius: 5px;
             cursor: pointer;
         }
 
         button {
-            background-color: rgba(193, 114, 193, 0.858);
+            background-color: rgba(108, 37, 221, 0.858);
             border: none;
             border-radius: 5px;
             height: 40px;
             width: 100px;
-
+            color: white;
+            
         }
+
+       
     </style>
 </head>
 
@@ -64,39 +76,51 @@
         <label for=rollno>Roll Number</lable>
             <input type="number" id="rollno">
             <br>
-            <label for="email">Email</label>
-            <input type="email" id="email">
+            <label for="email" >Email</label>
+            <input type="email" id="email" onblur="validateEmail()">
             <br>
-            <label for="pass">Password</label>
-            <input type="password" id="pass">
+            <label for="pass" >Password</label>
+            <input type="password" onblur="validatePass()" id="pass">
             <br>
-             <label for="pass">Confrim Password</label>
+            <label for="pass">Confrim Password</label>
             <input type="password" id="pass1">
             <br>
             <button type="submit">Register</button>
     </form><br>
 
     <script>
-function validate() {
+        function validate() {
 
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("pass").value;
-    let confirmPassword = document.getElementById("pass1").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("pass").value;
+            let confirmPassword = document.getElementById("pass1").value;
 
-    if(password !== confirmPassword){
-        alert("Passwords do not match");
-        return false;
-    }
 
-    localStorage.setItem("username", email);
-    localStorage.setItem("password", password);
 
-    alert("Registration Successful");
+            localStorage.setItem("username", email);
+            localStorage.setItem("password", password);
 
-    window.location.href = "login.html";
-    return false;
-}
+            alert("Registration Successful");
 
+            window.location.href = "login.html";
+            return false;
+        }
+        function validateEmail() {
+            let email = document.getElementById("email").value;
+            let emailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            if (!emailRegx.test(email)) {
+                alert('enter a valid email');
+                
+            }
+        }
+        function validatePass() {
+            let password = document.getElementById("pass").value;
+            let passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@._%])[A-Za-z\d@._%]{8,}$/
+            if (!passRegx.test(password)) {
+                alert('Enter a password Standard Password');
+               
+            }
+        }
     </script>
 
 </body>
