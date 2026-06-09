@@ -9,13 +9,13 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: linear-gradient(to bottom right,rgb(179, 151, 224),rgb(238, 154, 238));
+            background-image: linear-gradient(to bottom right, rgb(179, 151, 224), rgb(238, 154, 238));
         }
 
         form {
             margin: 100px auto;
             padding: 30px;
-            background-color:white;
+            background-color: white;
             width: 500px;
             height: auto;
             border-radius: 10px;
@@ -58,10 +58,11 @@
             color: white;
             font-size: 20px;
         }
+
         .btn-container {
-    display: flex;
-    justify-content: center;
-}
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -79,8 +80,8 @@
         <input type="password" id="password">
 
         <div class="btn-container">
-    <button type="submit">Login</button>
-</div>
+            <button type="submit">Login</button>
+        </div>
 
     </form>
 
@@ -109,12 +110,12 @@
                 return false;
             }
         }
-                function validateEmail() {
+        function validateEmail() {
             let email = document.getElementById("email").value;
             let emailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
             if (!emailRegx.test(email)) {
                 alert('enter a valid email');
-                
+
             }
         }
     </script>
