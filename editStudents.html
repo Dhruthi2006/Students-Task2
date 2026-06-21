@@ -1,86 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-         body{
-            align-items:center;
-        }
-        form{
-            text-align:center;
-            margin:20px;
-            padding:20px;
-            background-color:rgba(238, 212, 243, 0.902);
-            width:350px;
-            height:400px;
-            border-radius:10px;
-            margin-left:600px;
-            margin-top:100px;
-        }
-        input[type="text"],input[type="email"],input[type="number"],input[type="password"]{
-            border-radius:5px;
-            border:none;
-            padding:10px;
-            margin:10px;
-        }
-        h3{
-            text-align:center;
-        }
-        label{
-            font-size:20px;
-            font-weight:700px;
-        }
-        button{
-            background-color:rgba(193, 114, 193, 0.858);
-            border:none;
-            border-radius:5px;
-            height:40px;
-            width:100px;
+        body {
 
+            min-height: 100vh;
+          background-image: linear-gradient(to bottom right, rgb(214, 223, 228), rgb(213, 204, 216));
         }
-         input[type="submit"]{
-             /* padding:1px; */
-            /* margin:10px; */
-            width:300px;
-            border-radius:5px;
-            border:none;
-            height:40px;
+
+        form {
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            width: 500px;
+            height: auto;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2)
         }
-         nav{
-            background-color:black;
-            height:50px;
-             text-align:center;
+
+        .Label {
+            font-size: 20px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
         }
-        h1{
-            text-align:center;
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            /* border: none; */
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
         }
-        a{
-            text-decoration:none;
-            font-size:30px;
-            color:white;
-            margin:20px;
-            padding-top:20px;
-            
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            /* border: none; */
+            border-radius: 5px;
+            cursor: pointer;
         }
-        nav a:hover{
-            color:plum;
+
+         nav {
+            background-color: black;
+            height: 50px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+
+        nav a {
+            text-decoration: none;
+            font-size: 30px;
+            color: white;
+            margin: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+
+        nav a:hover {
+            color: plum;
+        }
+
+        button {
+            background-color: rgba(193, 114, 193, 0.858);
+            border: none;
+            border-radius: 5px;
+            height: 40px;
+            width: 100px;
+
         }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="addStudents.html">Add Students</a>
         <a href=editStudents.html>Edit Students</a>
-        <a href="deleteStudents.html">Delete Students</a>
+        <!-- <a href="deleteStudents.html">Delete Students</a> -->
         <a href="viewStudents.html">View Students</a>
+        <a href="Index.html">Log Out</a>
     </nav>
-    
-    <form>
-        <h3 > edit student </h3>
-        <label for ="name">Name</label>
-        <input type ="text" id="name">
+
+    <form onsubmit="updateStudent(); return false;">
+        <h3> edit student </h3>
+        <label for="name">Name</label>
+        <input type="text" id="name">
         <br>
         <label for="rollno">Roll NUmber</label>
         <input type="text" id="rollno">
@@ -93,5 +111,36 @@
         <br><br><br>
         <button type="submit">Update Student</button>
     </form>
+    <script>
+        let students = JSON.parse(localStorage.getItem("students")) || [];
+
+        let index = localStorage.getItem("editIndex");
+
+        document.getElementById("name").value = students[index].name;
+        document.getElementById("rollno").value = students[index].rollno;
+        document.getElementById("branch").value = students[index].branch;
+        document.getElementById("cgpa").value = students[index].cgpa;
+
+    </script>
+    <script>
+        function updateStudent() {
+
+            let students = JSON.parse(localStorage.getItem("students")) || [];
+
+            let index = localStorage.getItem("editIndex");
+
+            students[index].name = document.getElementById("name").value;
+            students[index].rollno = document.getElementById("rollno").value;
+            students[index].branch = document.getElementById("branch").value;
+            students[index].cgpa = document.getElementById("cgpa").value;
+
+            localStorage.setItem("students", JSON.stringify(students));
+
+            alert("Student Updated Successfully");
+
+            window.location.href = "viewStudents.html";
+        }
+    </script>
 </body>
+
 </html>
