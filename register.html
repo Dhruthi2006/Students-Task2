@@ -9,7 +9,7 @@
             align-items:center;
         }
         form{
-            text-align:center;
+          
             margin:20px;
             padding:20px;
             background-color:rgba(238, 212, 243, 0.902);
@@ -24,6 +24,8 @@
             border:none;
             padding:10px;
             margin:10px;
+            display: inline-block;
+            
         }
         h3{
             text-align:center;
@@ -31,6 +33,7 @@
         label{
             font-size:20px;
             font-weight:700px;
+            display: inline;
         }
         button{
             background-color:rgba(193, 114, 193, 0.858);
@@ -54,26 +57,27 @@
     
     <form>
         <H3>Registartion form</H3>
-        <label for=name>Name</label>
-        <input type="text" id=""name>
+        <label for=name >Name:</label>
         <br>
-        <label for=rollno>Roll Number</lable>
+        <input type="text" id="name">
+        <br>
+        <label for=rollno>Roll Number:</lable><br>
         <input type="number" id="rollno">
         <br>
-        <label for="email">Email</label>
+        <label for="email">Email:</label><br>
         <input type="email" id="email">
         <br>
-        <label for="pass">Password</label>
+        <label for="pass">Password:</label><br>
         <input type="password" id="pass">
         <br>
-        <button type="submit">Register</button>
+        <button type="submit">Register:</button>
     </form><br>
 
     _______________
 
     <br>
     <br>
-    <button onclick=windows.location.href="login.html">Back to login</button>
+    <button href="login.html">Back to login</button
 
 </body>
 </html>
