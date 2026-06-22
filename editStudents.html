@@ -2,145 +2,180 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Student</title>
+
     <style>
         body {
-
             min-height: 100vh;
-          background-image: linear-gradient(to bottom right, rgb(214, 223, 228), rgb(213, 204, 216));
+           background-image: linear-gradient(to bottom right,
+                    rgb(229, 232, 203),
+                    rgb(222, 187, 187));
+        }
+
+        nav {
+            background: black;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            margin: 20px;
         }
 
         form {
             margin: 100px auto;
             padding: 30px;
-            background-color: white;
             width: 500px;
-            height: auto;
+            background: white;
             border-radius: 10px;
-            text-align: left;
-            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2)
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .Label {
+
+        label {
             font-size: 20px;
             font-weight: bold;
             display: block;
-            margin-bottom: 8px;
         }
 
-        input[type="text"],
-        input[type="password"] {
+
+        input {
             width: 100%;
             height: 40px;
-            padding: 10px;
-            /* border: none; */
-            border-radius: 5px;
-            box-sizing: border-box;
             margin-bottom: 20px;
         }
 
-        input[type="submit"] {
-            padding: 10px 20px;
-            /* border: none; */
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-         nav {
-            background-color: black;
-            height: 50px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-
-        nav a {
-            text-decoration: none;
-            font-size: 30px;
-            color: white;
-            margin: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-
-        nav a:hover {
-            color: plum;
-        }
 
         button {
-            background-color: rgba(193, 114, 193, 0.858);
+            background: purple;
+            color: white;
             border: none;
-            border-radius: 5px;
+            width: 150px;
             height: 40px;
-            width: 100px;
-
         }
     </style>
+
 </head>
 
+
 <body>
+
+
     <nav>
+
         <a href="addStudents.html">Add Students</a>
-        <a href=editStudents.html>Edit Students</a>
-        <!-- <a href="deleteStudents.html">Delete Students</a> -->
+        <a href="editStudents.html">Edit Students</a>
         <a href="viewStudents.html">View Students</a>
-        <a href="Index.html">Log Out</a>
+
     </nav>
 
-    <form onsubmit="updateStudent(); return false;">
-        <h3> edit student </h3>
-        <label for="name">Name</label>
+
+
+    <form onsubmit="updateStudent(event)">
+
+
+        <h3>Edit Student</h3>
+
+
+        <label>Name</label>
         <input type="text" id="name">
-        <br>
-        <label for="rollno">Roll NUmber</label>
+
+
+        <label>Roll Number</label>
         <input type="text" id="rollno">
-        <br>
-        <label for="branch">Branch</label>
+
+
+        <label>Branch</label>
         <input type="text" id="branch">
-        <br>
-        <label for="cgpa">CGPA</label>
+
+
+        <label>CGPA</label>
         <input type="text" id="cgpa">
-        <br><br><br>
-        <button type="submit">Update Student</button>
+
+
+        <button>
+            Update Student
+        </button>
     </form>
     <script>
-        let students = JSON.parse(localStorage.getItem("students")) || [];
+        let params = new URLSearchParams(window.location.search);
 
-        let index = localStorage.getItem("editIndex");
+        let rollno = params.get("rollno");
 
-        document.getElementById("name").value = students[index].name;
-        document.getElementById("rollno").value = students[index].rollno;
-        document.getElementById("branch").value = students[index].branch;
-        document.getElementById("cgpa").value = students[index].cgpa;
 
-    </script>
-    <script>
-        function updateStudent() {
+        async function loadStudent() {
 
-            let students = JSON.parse(localStorage.getItem("students")) || [];
+            let response = await fetch(
+                `http://localhost:8081/students/${rollno}`
+            );
 
-            let index = localStorage.getItem("editIndex");
+            let student = await response.json();
 
-            students[index].name = document.getElementById("name").value;
-            students[index].rollno = document.getElementById("rollno").value;
-            students[index].branch = document.getElementById("branch").value;
-            students[index].cgpa = document.getElementById("cgpa").value;
 
-            localStorage.setItem("students", JSON.stringify(students));
+            document.getElementById("name").value = student.name;
+            document.getElementById("rollno").value = student.rollno;
+            document.getElementById("branch").value = student.branch;
+            document.getElementById("cgpa").value = student.cgpa;
 
-            alert("Student Updated Successfully");
-
-            window.location.href = "viewStudents.html";
         }
+
+        loadStudent();
+
+
+
+        async function updateStudent(event) {
+
+            event.preventDefault();
+
+
+            let student = {
+
+                name: document.getElementById("name").value,
+
+                rollno: document.getElementById("rollno").value,
+
+                branch: document.getElementById("branch").value,
+
+                cgpa: document.getElementById("cgpa").value
+
+            };
+
+
+
+            let response = await fetch(
+                `http://localhost:8081/students/rollno/${rollno}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(student)
+
+                });
+
+
+            if (response.ok) {
+
+                alert("Student updated successfully");
+
+                window.location.href = "viewStudents.html";
+
+            }
+
+        }
+
     </script>
+
+
 </body>
 
 </html>

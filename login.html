@@ -70,7 +70,7 @@
 
 
 
-    <form onsubmit="return validateForm()">
+    <form onsubmit="validateForm(event)">
         <h2 style="text-align: center;;">Login form</h2>
 
         <label for="email" class="Label">Email:</label>
@@ -85,40 +85,53 @@
 
     </form>
 
+
+
     <script>
 
-        function validateForm() {
+        async function validateForm(event) {
+
+            event.preventDefault(); // stops page reload
 
             let email = document.getElementById("email").value;
             let password = document.getElementById("password").value;
 
-            let storedUsername = localStorage.getItem("username");
-            let storedPassword = localStorage.getItem("password");
+            try {
 
-            console.log(email);
-            console.log(password);
-            console.log(storedUsername);
-            console.log(storedPassword);
-
-            if (email === storedUsername && password === storedPassword) {
-                alert("Login Successful");
-                window.location.href = "dashboard.html";
-                return false;
+                const response = await fetch("http://localhost:8080/Users", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                const users = await response.json();
+                const user = users.find(
+                    u => u.email === email && u.password === password
+                );
+                if (user) {
+                    alert("Login successful");
+                    window.location.href = "dashboard.html";
+                }
+                else {
+                    alert("Invalid username or password");
+                }
             }
-            else {
-                alert("Invalid Credentials");
-                return false;
+            catch (error) {
+                console.log(error);
+                alert("Server not reachable");
             }
         }
         function validateEmail() {
             let email = document.getElementById("email").value;
-            let emailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            let emailRegx =
+                /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegx.test(email)) {
-                alert('enter a valid email');
-
+                alert("Enter a valid email");
             }
         }
+
     </script>
+
 
 </body>
 
