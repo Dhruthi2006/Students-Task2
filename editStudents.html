@@ -3,64 +3,71 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <title>Edit Student</title>
+<meta charset="UTF-8">
+<title>Edit Student</title>
 
-    <style>
-        body {
-            min-height: 100vh;
-           background-image: linear-gradient(to bottom right,
-                    rgb(229, 232, 203),
-                    rgb(222, 187, 187));
-        }
+<style>
 
-        nav {
-            background: black;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 25px;
-            margin: 20px;
-        }
-
-        form {
-            margin: 100px auto;
-            padding: 30px;
-            width: 500px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-        }
+body {
+    min-height:100vh;
+    margin:0;
+    background-image: linear-gradient(to bottom right,
+    rgb(229,232,203),
+    rgb(222,187,187));
+}
 
 
-        label {
-            font-size: 20px;
-            font-weight: bold;
-            display: block;
-        }
+nav {
+    background:black;
+    height:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
 
-        input {
-            width: 100%;
-            height: 40px;
-            margin-bottom: 20px;
-        }
+nav a {
+    color:white;
+    text-decoration:none;
+    font-size:25px;
+    margin:20px;
+}
 
 
-        button {
-            background: purple;
-            color: white;
-            border: none;
-            width: 150px;
-            height: 40px;
-        }
-    </style>
+form {
+    margin:100px auto;
+    padding:30px;
+    width:500px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 10px 10px rgba(0,0,0,0.2);
+}
+
+
+label {
+    font-size:20px;
+    font-weight:bold;
+    display:block;
+}
+
+
+input {
+    width:100%;
+    height:40px;
+    margin-bottom:20px;
+}
+
+
+button {
+    background:purple;
+    color:white;
+    border:none;
+    width:150px;
+    height:40px;
+    border-radius:5px;
+}
+
+</style>
 
 </head>
 
@@ -68,112 +75,191 @@
 <body>
 
 
-    <nav>
+<nav>
 
-        <a href="addStudents.html">Add Students</a>
-        <a href="editStudents.html">Edit Students</a>
-        <a href="viewStudents.html">View Students</a>
+<a href="addStudents.html">Add Students</a>
+<a href="editStudents.html">Edit Students</a>
+<a href="viewStudents.html">View Students</a>
 
-    </nav>
-
-
-
-    <form onsubmit="updateStudent(event)">
+</nav>
 
 
-        <h3>Edit Student</h3>
+
+<form onsubmit="updateStudent(event)">
 
 
-        <label>Name</label>
-        <input type="text" id="name">
+<h3>Edit Student</h3>
 
 
-        <label>Roll Number</label>
-        <input type="text" id="rollno">
+<label>Name</label>
+<input type="text" id="name">
 
 
-        <label>Branch</label>
-        <input type="text" id="branch">
+<label>Roll Number</label>
+<input type="text" id="rollno">
 
 
-        <label>CGPA</label>
-        <input type="text" id="cgpa">
+<label>Branch</label>
+<input type="text" id="branch">
 
 
-        <button>
-            Update Student
-        </button>
-    </form>
-    <script>
-        let params = new URLSearchParams(window.location.search);
-
-        let rollno = params.get("rollno");
+<label>CGPA</label>
+<input type="text" id="cgpa">
 
 
-        async function loadStudent() {
-
-            let response = await fetch(
-                `http://localhost:8081/students/${rollno}`
-            );
-
-            let student = await response.json();
+<button type="submit">
+Update Student
+</button>
 
 
-            document.getElementById("name").value = student.name;
-            document.getElementById("rollno").value = student.rollno;
-            document.getElementById("branch").value = student.branch;
-            document.getElementById("cgpa").value = student.cgpa;
+</form>
+
+
+
+<script>
+
+
+// get roll number from URL
+
+let params = new URLSearchParams(window.location.search);
+
+let rollno = params.get("rollno");
+
+
+
+// load student details
+
+async function loadStudent(){
+
+
+    let response = await fetch(
+        "http://localhost:8081/students"
+    );
+
+
+    let students = await response.json();
+
+
+
+    let student = students.find(
+        s => s.rollno == rollno
+    );
+
+
+
+    if(student){
+
+
+        document.getElementById("name").value =
+        student.name;
+
+
+        document.getElementById("rollno").value =
+        student.rollno;
+
+
+        document.getElementById("branch").value =
+        student.branch;
+
+
+        document.getElementById("cgpa").value =
+        student.cgpa;
+
+
+    }
+    else{
+
+        alert("Student not found");
+
+    }
+
+
+}
+
+
+loadStudent();
+
+
+
+
+// update student
+
+async function updateStudent(event){
+
+
+    event.preventDefault();
+
+
+
+    let student = {
+
+
+        name:
+        document.getElementById("name").value,
+
+
+        rollno:
+        document.getElementById("rollno").value,
+
+
+        branch:
+        document.getElementById("branch").value,
+
+
+        cgpa:
+        document.getElementById("cgpa").value
+
+    };
+
+
+
+    let response = await fetch(
+
+        `http://localhost:8081/students/${rollno}`,
+
+        {
+
+            method:"PUT",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(student)
 
         }
 
-        loadStudent();
+    );
 
 
 
-        async function updateStudent(event) {
-
-            event.preventDefault();
+    if(response.ok){
 
 
-            let student = {
-
-                name: document.getElementById("name").value,
-
-                rollno: document.getElementById("rollno").value,
-
-                branch: document.getElementById("branch").value,
-
-                cgpa: document.getElementById("cgpa").value
-
-            };
+        alert("Student updated successfully");
 
 
-
-            let response = await fetch(
-                `http://localhost:8081/students/rollno/${rollno}`,
-                {
-                    method: "PUT",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(student)
-
-                });
+        window.location.href =
+        "viewStudents.html";
 
 
-            if (response.ok) {
+    }
+    else{
 
-                alert("Student updated successfully");
 
-                window.location.href = "viewStudents.html";
+        alert("Update failed");
 
-            }
 
-        }
+    }
 
-    </script>
+
+}
+
+
+
+</script>
 
 
 </body>
